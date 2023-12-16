@@ -9,7 +9,7 @@ docker images
 # Mengubah nama image agar sesuai dengan format GitHub Packages
 docker tag item-app:v1 ghcr.io/nrwahyuaji/item-app:v1
 
-# Login ke Docker Hub via Terminal
+# Login ke GitHub Packages via Terminal
 echo $PAT | docker login ghcr.io --username nrwahyuaji --password-stdin
 
 # Mengunggah image ke GitHub Packages
