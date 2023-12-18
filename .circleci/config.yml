@@ -39,5 +39,5 @@ workflows:
       - test-app
       - build-app-karsajobs:
           requires:
-            - docler/hadolint
+            - docker/hadolint
             - test-app
