@@ -6,7 +6,7 @@ orbs:
 jobs:
   build-app-karsajobs-ui:
     executor: docker/docker
-    environtment:
+    environment:
       IMAGE_NAME: ghcr.io/nrwahyuaji/karsajobs-ui
     steps:
       - checkout
@@ -27,4 +27,4 @@ workflows:
           dockerfiles: './Dockerfile'
       - build-app-karsajobs:
           requires:
-            - docler/hadolint
+            - docker/hadolint
