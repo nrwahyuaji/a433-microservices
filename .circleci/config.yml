@@ -17,7 +17,7 @@ jobs:
       - run:
           name: Publish Docker Image to GitHub Registry
           command: |
-            echo "$CR_PAT" | docker login ghcr.io -u "$GHCR_USERAME" --password-stdin
+            echo "$CR_PAT" | docker login ghcr.io --username "$GHCR_USERAME" --password-stdin
             docker push $IMAGE_NAME:latest
 
 workflows:
