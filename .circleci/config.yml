@@ -14,7 +14,7 @@ jobs:
       - run:
           name: Run Unit Tests
           command: |
-            go clean -modcache && go init 
+            go clean -modcache
             go test -v -short --count=1 $(go list ./ ... )
 
   build-app-karsajobs:
@@ -26,7 +26,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker Image
-          command: docker build -t $IMAGE_NAME:latest .
+          command: docker build -t ghcr.io/nrwahyuaji/karsajobs:latest .
       - run:
           name: Publish Docker Image to GitHub Registry
           command: |
