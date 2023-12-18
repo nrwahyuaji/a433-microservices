@@ -13,7 +13,9 @@ jobs:
       - checkout
       - run:
           name: Run Unit Tests
-          command: go test -v -short --count=1 $(go list ./ ... )
+          command: |
+            go clean -modcache && go init 
+            go test -v -short --count=1 $(go list ./ ... )
 
   build-app-karsajobs:
     executor: docker/docker
@@ -28,7 +30,7 @@ jobs:
       - run:
           name: Publish Docker Image to GitHub Registry
           command: |
-            echo "$CR_PAT" | docker login ghcr.io -u "$GHCR_USERAME" --password-stdin
+            echo "$CR_PAT" | docker login ghcr.io --username nrwahyuaji --password-stdin
             docker push $IMAGE_NAME:latest
 
 workflows:
