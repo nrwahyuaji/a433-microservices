@@ -1,43 +1,63 @@
+# Menggunakan Docker Compose versi 2.1
 version: '2.1'
-
+# Membuat service
 services:
+  # Membuat service bernama order-service
   order-service:
-    image: ajik769/order-service
+    # Menggunakan image order-service dari GitHub Packages
+    image: ghcr.io/nrwahyuaji/order-service
+    # Menamai container dengan order-service
     container_name: order-service
+    # Melakukan port mapping agar dpat di akses
     ports:
       - 3000:3000
+    # Pastikan order-service hanya berjalan setelah rabbitmq berjalan
     depends_on:
       rabbitmq:
+        # kondisi healthy
         condition: service_healthy
     links:
       - rabbitmq
     networks:
       - rabbitmq_network
+  # Membuat service bernama shipping-service
   shipping-service:
-    image: ajik769/shipping-service
+    # Menggunakan image shipping-service dari GitHub Packages
+    image: ghcr.io/nrwahyuaji/shipping-service
+    # Menamai container dengan shipping-service
     container_name: shipping-service
+    # Melakukan port mapping agar dapat diakses
     ports:
       - 3001:3001
+    # Pastikan order-service hanya berjalan setelah rabbitmq berjalan
     depends_on:
       rabbitmq:
+        # Kondisi healthy
         condition: service_healthy
     links:
       - rabbitmq
     networks:
       - rabbitmq_network
+  # Membuat service bernama rabbitmq
   rabbitmq:
+    # Menggunakan image rabbitmq:3.11-management dari Docker Hub
     image: rabbitmq:3.11-management
+    # Menamai container dengan rabbitmq
     container_name: rabbitmq
+    # Melakukan port mapping aga dapat diakses
     ports:
       - 5672:5672
       - 15672:15672
+    # Mendefinisikan VOlume  
     volumes:
         - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
         - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    # Melakukan healty check dengan test exit saja
     healthcheck:
       test: "exit 0"
     networks:
       - rabbitmq_network
+# Mengatur driver rabbitmq_network menjadi bridge
 networks:
   rabbitmq_network:
     driver: bridge
